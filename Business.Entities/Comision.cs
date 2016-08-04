@@ -30,5 +30,12 @@ namespace Business.Entities
             set { _idPlan = value; }
         }
 
+        private Plan _plan;
+        public Plan Plan
+        {
+            get;
+            set;
+        }
+
     }
 }
