@@ -32,10 +32,10 @@ namespace Data.Database
                     ma.DescMateria = (string)drMaterias["desc_materia"];
                     ma.HsSemanales = (int)drMaterias["hs_semanales"];
                     ma.HsTotales = (int)drMaterias["hs_totales"];
-                    ma.IdPlan = (int)drMaterias["id_plan"];
-                    pa.ID = (int)drMaterias["id_plan"];
+                    ma.IdPlan = (int)drMaterias["materias.id_plan"];
+                    pa.ID = (int)drMaterias["materias.id_plan"];
                     pa.Descripcion = (string)drMaterias["desc_plan"];
-                    es.ID = (int)drMaterias["id_especialidad"];
+                    es.ID = (int)drMaterias["materias.id_especialidad"];
                     es.Descripcion = (string)drMaterias["desc_especialidad"];
                     pa.Especialidad = es;
                     ma.Plan = pa;
