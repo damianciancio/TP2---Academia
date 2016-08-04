@@ -51,5 +51,28 @@ namespace Business.Entities
             set { _Habilitado = value; }
         }
 
+        private bool _cambiaClave;
+
+        public bool CambiaClave
+        {
+            get { return _cambiaClave; }
+            set { _cambiaClave = value; }
+        }
+
+        private int _idPersona;
+
+        public int IdPersona
+        {
+            get { return _idPersona; }
+            set { _idPersona = value; }
+        }
+
+        private Persona persona;
+
+        internal Persona Persona
+        {
+            get { return persona; }
+            set { persona = value; }
+        }
     }
 }

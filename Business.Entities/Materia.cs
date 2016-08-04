@@ -6,7 +6,43 @@ using System.Threading.Tasks;
 
 namespace Business.Entities
 {
-    class Materia : BusinessEntity
+    public class Materia : BusinessEntity
     {
+        private string _descMateria;
+
+        public string DescMateria
+        {
+            get { return _descMateria; }
+            set { _descMateria = value; }
+        }
+        private int _hsSemanales;
+
+        public int HsSemanales
+        {
+            get { return _hsSemanales; }
+            set { _hsSemanales = value; }
+        }
+        private int _hsTotales;
+
+        public int HsTotales
+        {
+            get { return _hsTotales; }
+            set { _hsTotales = value; }
+        }
+        private int _idPlan;
+
+        public int IdPlan
+        {
+            get { return _idPlan; }
+            set { _idPlan = value; }
+        }
+
+        private Plan plan;
+
+        public Plan Plan
+        {
+            get { return plan; }
+            set { plan = value; }
+        }
     }
 }
