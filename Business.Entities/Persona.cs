@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Business.Entities
 {
-    class Persona : BusinessEntity
+    public class Persona : BusinessEntity
     {
         private string _nombre;
 
@@ -43,6 +43,14 @@ namespace Business.Entities
             get { return _fechaNac; }
             set { _fechaNac = value; }
         }
+        private string _Email;
+        
+        public string Email
+        {
+          get { return _Email; }
+          set { _Email = value; }
+        }
+        
         private int _legajo;
 
         public int Legajo
