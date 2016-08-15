@@ -30,20 +30,20 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Materias));
             this.tcMaterias = new System.Windows.Forms.ToolStripContainer();
-            this.tsMaterias = new System.Windows.Forms.ToolStrip();
             this.tlMaterias = new System.Windows.Forms.TableLayoutPanel();
             this.dgvMaterias = new System.Windows.Forms.DataGridView();
             this.btnActualizar = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
+            this.tsMaterias = new System.Windows.Forms.ToolStrip();
             this.tsbNuevo = new System.Windows.Forms.ToolStripButton();
             this.tsbEditar = new System.Windows.Forms.ToolStripButton();
             this.tsbEliminar = new System.Windows.Forms.ToolStripButton();
             this.tcMaterias.ContentPanel.SuspendLayout();
             this.tcMaterias.TopToolStripPanel.SuspendLayout();
             this.tcMaterias.SuspendLayout();
-            this.tsMaterias.SuspendLayout();
             this.tlMaterias.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMaterias)).BeginInit();
+            this.tsMaterias.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcMaterias
@@ -63,18 +63,6 @@
             // tcMaterias.TopToolStripPanel
             // 
             this.tcMaterias.TopToolStripPanel.Controls.Add(this.tsMaterias);
-            // 
-            // tsMaterias
-            // 
-            this.tsMaterias.Dock = System.Windows.Forms.DockStyle.None;
-            this.tsMaterias.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsbNuevo,
-            this.tsbEditar,
-            this.tsbEliminar});
-            this.tsMaterias.Location = new System.Drawing.Point(3, 0);
-            this.tsMaterias.Name = "tsMaterias";
-            this.tsMaterias.Size = new System.Drawing.Size(81, 25);
-            this.tsMaterias.TabIndex = 0;
             // 
             // tlMaterias
             // 
@@ -128,6 +116,18 @@
             this.btnSalir.UseVisualStyleBackColor = true;
             this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
             // 
+            // tsMaterias
+            // 
+            this.tsMaterias.Dock = System.Windows.Forms.DockStyle.None;
+            this.tsMaterias.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsbNuevo,
+            this.tsbEditar,
+            this.tsbEliminar});
+            this.tsMaterias.Location = new System.Drawing.Point(3, 0);
+            this.tsMaterias.Name = "tsMaterias";
+            this.tsMaterias.Size = new System.Drawing.Size(112, 25);
+            this.tsMaterias.TabIndex = 0;
+            // 
             // tsbNuevo
             // 
             this.tsbNuevo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -136,6 +136,7 @@
             this.tsbNuevo.Name = "tsbNuevo";
             this.tsbNuevo.Size = new System.Drawing.Size(23, 22);
             this.tsbNuevo.Text = "Nuevo";
+            this.tsbNuevo.Click += new System.EventHandler(this.tsbNuevo_Click);
             // 
             // tsbEditar
             // 
@@ -146,6 +147,7 @@
             this.tsbEditar.Size = new System.Drawing.Size(23, 22);
             this.tsbEditar.Text = "toolStripButton2";
             this.tsbEditar.ToolTipText = "Editar";
+            this.tsbEditar.Click += new System.EventHandler(this.tsbEditar_Click);
             // 
             // tsbEliminar
             // 
@@ -156,6 +158,7 @@
             this.tsbEliminar.Size = new System.Drawing.Size(23, 22);
             this.tsbEliminar.Text = "toolStripButton3";
             this.tsbEliminar.ToolTipText = "Eliminar";
+            this.tsbEliminar.Click += new System.EventHandler(this.tsbEliminar_Click);
             // 
             // Materias
             // 
@@ -171,10 +174,10 @@
             this.tcMaterias.TopToolStripPanel.PerformLayout();
             this.tcMaterias.ResumeLayout(false);
             this.tcMaterias.PerformLayout();
-            this.tsMaterias.ResumeLayout(false);
-            this.tsMaterias.PerformLayout();
             this.tlMaterias.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvMaterias)).EndInit();
+            this.tsMaterias.ResumeLayout(false);
+            this.tsMaterias.PerformLayout();
             this.ResumeLayout(false);
 
         }

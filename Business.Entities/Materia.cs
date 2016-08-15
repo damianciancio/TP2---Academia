@@ -29,14 +29,7 @@ namespace Business.Entities
             get { return _hsTotales; }
             set { _hsTotales = value; }
         }
-        private int _idPlan;
-
-        public int IdPlan
-        {
-            get { return _idPlan; }
-            set { _idPlan = value; }
-        }
-
+        
         private Plan plan;
 
         public Plan Plan

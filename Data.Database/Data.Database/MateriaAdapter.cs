@@ -19,25 +19,17 @@ namespace Data.Database
             try
             {
                 this.OpenConnection();
-                SqlCommand cmdMaterias = new SqlCommand("select * from materias "+
-                    "inner join planes on materias.id_plan = planes.id_plan "+
-                    "inner join especialidades on especialidades.id_especialidad = planes.id_especialidad", SqlConn);
+                SqlCommand cmdMaterias = new SqlCommand("select * from materias", SqlConn);
                 SqlDataReader drMaterias = cmdMaterias.ExecuteReader();
                 while (drMaterias.Read())
                 {
                     Plan pa = new Plan();
                     Materia ma = new Materia();
-                    Especialidad es = new Especialidad();
                     ma.ID = (int)drMaterias["id_materia"];
                     ma.DescMateria = (string)drMaterias["desc_materia"];
                     ma.HsSemanales = (int)drMaterias["hs_semanales"];
                     ma.HsTotales = (int)drMaterias["hs_totales"];
-                    ma.IdPlan = (int)drMaterias["materias.id_plan"];
-                    pa.ID = (int)drMaterias["materias.id_plan"];
-                    pa.Descripcion = (string)drMaterias["desc_plan"];
-                    es.ID = (int)drMaterias["materias.id_especialidad"];
-                    es.Descripcion = (string)drMaterias["desc_especialidad"];
-                    pa.Especialidad = es;
+                    pa = (new PlanAdapter()).GetOne((int)drMaterias["id_plan"]);
                     ma.Plan = pa;
                     materias.Add(ma);
                 }
@@ -72,17 +64,11 @@ namespace Data.Database
                 if (drMaterias.Read())
                 {
                     Plan pa = new Plan();
-                    Especialidad es = new Especialidad();
                     ma.ID = (int)drMaterias["id_materia"];
                     ma.DescMateria = (string)drMaterias["desc_materia"];
                     ma.HsSemanales = (int)drMaterias["hs_semanales"];
                     ma.HsTotales = (int)drMaterias["hs_totales"];
-                    ma.IdPlan = (int)drMaterias["id_plan"];
-                    pa.ID = (int)drMaterias["id_plan"];
-                    pa.Descripcion = (string)drMaterias["desc_plan"];
-                    es.ID = (int)drMaterias["id_especialidad"];
-                    es.Descripcion = (string)drMaterias["desc_especialidad"];
-                    pa.Especialidad = es;
+                    pa = (new PlanAdapter()).GetOne((int)drMaterias["id_plan"]);
                     ma.Plan = pa;
                 }
             }
@@ -174,7 +160,7 @@ namespace Data.Database
             try
             {
                 this.OpenConnection();
-                SqlCommand cmdInsert = new SqlCommand("insert materias (desc_especialidad, hs_semanales, hs_totales, id_plan) "+ 
+                SqlCommand cmdInsert = new SqlCommand("insert materias (desc_materia, hs_semanales, hs_totales, id_plan) "+ 
                 "values (@descripcion, @hsSemanales, @hsTotales, @idPlan) select @@identity", SqlConn);
                 cmdInsert.Parameters.Add("@descripcion", SqlDbType.VarChar, 50).Value = ma.DescMateria;
                 cmdInsert.Parameters.Add("@hsSemanales", SqlDbType.Decimal).Value = ma.HsSemanales;
