@@ -11,7 +11,7 @@ namespace Data.Database
 {
     public class CursoAdapter : Adapter
     {
-        /*
+        
         public List<Curso> GetAll()
         {
             List<Curso> cursos = new List<Curso>();
@@ -19,17 +19,39 @@ namespace Data.Database
             try
             {
                 this.OpenConnection();
-                SqlCommand cmdCursos = new SqlCommand("select * from materias " +
-                    "inner join planes on materias.id_plan = planes.id_plan " +
-                    "inner join especialidades on especialidades.id_especialidad = planes.id_especialidad", SqlConn);
+                SqlCommand cmdCursos = new SqlCommand("select * from cursos " +
+                    "inner join materias on materias.id_materia = curso.id_materia " +
+                    "inner join comisiones on comisiones.id_id_comision = cursos.id_comision "+
+                    "inner join planes on planes.id_plan = materias.id_plan "+
+                    "inner join especialidades on planes.id_especialidad = especialidades.id_especialidad", SqlConn);
                 SqlDataReader drCursos = cmdCursos.ExecuteReader();
                 while (drCursos.Read())
                 {
-                    Plan pa = new Plan();
                     Curso cu = new Curso();
+                    Materia ma = new Materia();
+                    Comision co = new Comision();
+                    Plan pl = new Plan();
                     Especialidad es = new Especialidad();
-         
+                    cu.ID = (int)drCursos["id_curso"];
+                    cu.AnioCalendario = (int)drCursos["anio_calendario"];
+                    cu.Cupo = (int)drCursos["cupo"];
+                    ma.ID = (int)drCursos["id_materia"];
+                    ma.DescMateria = (string)drCursos["desc_materia"];
+                    co.ID = (int)drCursos["id_comision"];
+                    co.DescComision = (string)drCursos["desc_comision"];
+                    co.IdPlan = (int)drCursos["id_plan"];
                     
+                    pl.ID = (int)drCursos["id_plan"];
+                    pl.Descripcion = (string)drCursos["desc_plan"];
+                    es.ID = (int)drCursos["id_especialidad"];
+                    es.Descripcion = (string)drCursos["desc_especialidad"];
+                    co.Plan = pl;
+                    ma.Plan = pl;
+                    pl.Especialidad = es;
+                    cu.Comision = co;
+                    cu.Materia = ma;
+                    
+
                     cursos.Add(cu);
                 }
                 drCursos.Close();
@@ -46,34 +68,45 @@ namespace Data.Database
             return cursos;
         }
 
-        public Materia GetOne(int ID)
+        public Curso GetOne(int ID)
         {
-            Materia ma = new Materia();
+            Curso cu = new Curso();
             try
             {
                 this.OpenConnection();
-                SqlCommand cmdMaterias = new SqlCommand("select * from materias " +
-                    "inner join planes on materias.id_plan = planes.id_plan " +
-                    "inner join especialidades on especialidades.id_especialidad = planes.id_especialidad " +
-                    "where id_materia = @id", SqlConn);
-                cmdMaterias.Parameters.Add("@id", SqlDbType.Int).Value = ID;
-                SqlDataReader drMaterias = cmdMaterias.ExecuteReader();
+                SqlCommand cmdCursos = new SqlCommand("select * from cursos " +
+                    "inner join materias on materias.id_materia = curso.id_materia " +
+                    "inner join comisiones on comisiones.id_id_comision = cursos.id_comision " +
+                    "inner join planes on planes.id_plan = materias.id_plan " +
+                    "inner join especialidades on planes.id_especialidad = especialidades.id_especialidad "+
+                    "where cursos.id_curso = @id", SqlConn);
+                cmdCursos.Parameters.Add("@id", SqlDbType.Int).Value = ID;
+                SqlDataReader drCursos = cmdCursos.ExecuteReader();
 
-                if (drMaterias.Read())
+                if (drCursos.Read())
                 {
-                    Plan pa = new Plan();
+                    Materia ma = new Materia();
+                    Comision co = new Comision();
+                    Plan pl = new Plan();
                     Especialidad es = new Especialidad();
-                    ma.ID = (int)drMaterias["id_materia"];
-                    ma.DescMateria = (string)drMaterias["desc_materia"];
-                    ma.HsSemanales = (int)drMaterias["hs_semanales"];
-                    ma.HsTotales = (int)drMaterias["hs_totales"];
-                    ma.IdPlan = (int)drMaterias["id_plan"];
-                    pa.ID = (int)drMaterias["id_plan"];
-                    pa.Descripcion = (string)drMaterias["desc_plan"];
-                    es.ID = (int)drMaterias["id_especialidad"];
-                    es.Descripcion = (string)drMaterias["desc_especialidad"];
-                    pa.Especialidad = es;
-                    ma.Plan = pa;
+                    cu.ID = (int)drCursos["id_curso"];
+                    cu.AnioCalendario = (int)drCursos["anio_calendario"];
+                    cu.Cupo = (int)drCursos["cupo"];
+                    ma.ID = (int)drCursos["id_materia"];
+                    ma.DescMateria = (string)drCursos["desc_materia"];
+                    co.ID = (int)drCursos["id_comision"];
+                    co.DescComision = (string)drCursos["desc_comision"];
+                    co.IdPlan = (int)drCursos["id_plan"];
+
+                    pl.ID = (int)drCursos["id_plan"];
+                    pl.Descripcion = (string)drCursos["desc_plan"];
+                    es.ID = (int)drCursos["id_especialidad"];
+                    es.Descripcion = (string)drCursos["desc_especialidad"];
+                    co.Plan = pl;
+                    ma.Plan = pl;
+                    pl.Especialidad = es;
+                    cu.Comision = co;
+                    cu.Materia = ma;
                 }
             }
             catch (Exception Ex)
@@ -85,7 +118,7 @@ namespace Data.Database
             {
                 this.CloseConnection();
             }
-            return ma;
+            return cu;
         }
 
         public void Delete(int ID)
@@ -133,19 +166,19 @@ namespace Data.Database
             curso.State = BusinessEntity.States.Unmodified;
         }
 
-        public void Update(Curso ma)
+        public void Update(Curso cu)
         {
             try
             {
                 this.OpenConnection();
-                SqlCommand cmdMateria = new SqlCommand("update materias set desc_materia = @descripcion, " +
-                    "materias.hs_semanales = @hsSemanales, materias.hs_totales = @hsTotales, materias.id_plan = @idPlan " +
-                    "where id_materia = @id", SqlConn);
-                cmdMateria.Parameters.Add("@descripcion", SqlDbType.VarChar, 50).Value = ma.DescMateria;
-                cmdMateria.Parameters.Add("@hsSemanales", SqlDbType.Decimal).Value = ma.HsSemanales;
-                cmdMateria.Parameters.Add("@hsTotales", SqlDbType.Decimal).Value = ma.HsTotales;
-                cmdMateria.Parameters.Add("@idPlan", SqlDbType.Decimal).Value = ma.Plan.ID;
-                cmdMateria.Parameters.Add("@id", SqlDbType.Decimal).Value = ma.ID;
+                SqlCommand cmdMateria = new SqlCommand("update cursos set cursos.id_materia = @idMateria, " +
+                    "cursos.id_comision = @idComision, cursos.anio_calendario = @anioCalendario, cursos.cupo = @cupo " +
+                    "where cursos.id_curso = @id", SqlConn);
+                cmdMateria.Parameters.Add("@id_materia", SqlDbType.VarChar, 50).Value = cu.Materia.ID;
+                cmdMateria.Parameters.Add("@idComision", SqlDbType.Decimal).Value = cu.Comision.ID;
+                cmdMateria.Parameters.Add("@anioCalendario", SqlDbType.Decimal).Value = cu.AnioCalendario;
+                cmdMateria.Parameters.Add("@cupo", SqlDbType.Decimal).Value = cu.Cupo;
+                cmdMateria.Parameters.Add("@id", SqlDbType.Decimal).Value = cu.ID;
                 cmdMateria.ExecuteNonQuery();
             }
             catch (Exception Ex)
@@ -159,18 +192,18 @@ namespace Data.Database
             }
         }
 
-        public void Insert(Curso ma)
+        public void Insert(Curso cu)
         {
             try
             {
                 this.OpenConnection();
-                SqlCommand cmdInsert = new SqlCommand("insert materias (desc_especialidad, hs_semanales, hs_totales, id_plan) " +
-                "values (@descripcion, @hsSemanales, @hsTotales, @idPlan) select @@identity", SqlConn);
-                cmdInsert.Parameters.Add("@descripcion", SqlDbType.VarChar, 50).Value = ma.DescMateria;
-                cmdInsert.Parameters.Add("@hsSemanales", SqlDbType.Decimal).Value = ma.HsSemanales;
-                cmdInsert.Parameters.Add("@hsTotales", SqlDbType.Decimal).Value = ma.HsTotales;
-                cmdInsert.Parameters.Add("@idPlan", SqlDbType.Decimal).Value = ma.Plan.ID;
-                ma.ID = Decimal.ToInt32((decimal)cmdInsert.ExecuteScalar());
+                SqlCommand cmdInsert = new SqlCommand("insert cursos (id_materia, id_comision, anio_calendario, cupo) " +
+                "values (@idMateria, @idComision, @anioCalendario, @cupo) select @@identity", SqlConn);
+                cmdInsert.Parameters.Add("@id_materia", SqlDbType.VarChar, 50).Value = cu.Materia.ID;
+                cmdInsert.Parameters.Add("@idComision", SqlDbType.Decimal).Value = cu.Comision.ID;
+                cmdInsert.Parameters.Add("@anioCalendario", SqlDbType.Decimal).Value = cu.AnioCalendario;
+                cmdInsert.Parameters.Add("@cupo", SqlDbType.Decimal).Value = cu.Cupo;
+                cu.ID = Decimal.ToInt32((decimal)cmdInsert.ExecuteScalar());
             }
             catch (Exception Ex)
             {
@@ -181,6 +214,6 @@ namespace Data.Database
             {
                 this.CloseConnection();
             }
-        } */
+        } 
     }
 }

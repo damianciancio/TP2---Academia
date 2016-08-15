@@ -8,30 +8,18 @@ namespace Business.Entities
 {
     public class Curso : BusinessEntity
     {
-        private int _idMateria;
-
-        public int IdMateria
-        {
-            get { return _idMateria; }
-            set { _idMateria = value; }
-        }
+        
         private Materia materia;
 
-        internal Materia Materia
+        public Materia Materia
         {
             get { return materia; }
             set { materia = value; }
         }
-        private int _idComision;
-
-        public int IdComision
-        {
-            get { return _idComision; }
-            set { _idComision = value; }
-        }
+        
         private Comision comision;
 
-        internal Comision Comision
+        public Comision Comision
         {
             get { return comision; }
             set { comision = value; }
