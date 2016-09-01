@@ -39,5 +39,34 @@ namespace UI.Desktop
         {
             Listar();
         }
+
+        private void tsbNuevo_Click(object sender, EventArgs e)
+        {
+            CursoDesktop usrL = new CursoDesktop(ApplicationForm.ModoForm.Alta);
+            usrL.ShowDialog();
+            this.Listar();
+        }
+
+        private void tsbEditar_Click(object sender, EventArgs e)
+        {
+            if (this.dgvCursos.SelectedRows.Count != 0)
+            {
+                int ID = ((Business.Entities.Curso)this.dgvCursos.SelectedRows[0].DataBoundItem).ID;
+                CursoDesktop formUsuario = new CursoDesktop(ID, ApplicationForm.ModoForm.Modificacion);
+                formUsuario.ShowDialog();
+            }
+            this.Listar();
+        }
+
+        private void tsbEliminar_Click(object sender, EventArgs e)
+        {
+            if (this.dgvCursos.SelectedRows.Count != 0)
+            {
+                int ID = ((Business.Entities.Curso)this.dgvCursos.SelectedRows[0].DataBoundItem).ID;
+                CursoDesktop formUsuario = new CursoDesktop(ID, ApplicationForm.ModoForm.Baja);
+                formUsuario.ShowDialog();
+            }
+            this.Listar();
+        }
     }
 }

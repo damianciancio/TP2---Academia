@@ -14,9 +14,91 @@ namespace UI.Desktop
 {
     public partial class CursoDesktop : ApplicationForm
     {
-        private Curso CursoActual;
+        private Curso _cursoActual;
 
-        public CursoDesktop()
+        public Curso CursoActual
+        {
+            get { return _cursoActual; }
+            set { _cursoActual = value; }
+        }
+
+        public CursoDesktop(ModoForm md) : this()
+        {
+            this.Modo = md;
+        }
+        public CursoDesktop(int ID, ModoForm md) : this()
+        {
+            this.Modo = md;
+            CursoLogic ml = new CursoLogic();
+            CursoActual = ml.GetOne(ID);
+            MapearDeDatos();
+        }
+
+        public override void MapearDeDatos()
+        {
+            this.txtId.Text = CursoActual.ID.ToString();
+            this.txtAnio.Text = CursoActual.AnioCalendario.ToString();
+            this.txtCupo.Text = CursoActual.Cupo.ToString();
+            this.cmbComision.SelectedItem = CursoActual.Comision;
+            this.cmbMaterias.SelectedItem = CursoActual.Materia;
+
+            switch (this.Modo)
+            {
+                case ModoForm.Alta:
+                    btnGuardar.Text = "Guardar";
+                    break;
+                case ModoForm.Baja:
+                    btnGuardar.Text = "Eliminar";
+                    break;
+                case ModoForm.Modificacion:
+                    btnGuardar.Text = "Guardar";
+                    break;
+                case ModoForm.Consulta:
+                    btnGuardar.Text = "Aceptar";
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
+        public override void MapearADatos()
+        {
+            if (this.Modo == ModoForm.Alta)
+            {
+                CursoActual = new Curso();
+            }
+            else
+            {
+
+                CursoActual.ID = int.Parse(txtId.Text);
+            }
+
+            CursoActual.AnioCalendario = int.Parse(txtAnio.Text);
+            CursoActual.Materia = (Materia)cmbMaterias.SelectedItem;
+            CursoActual.Comision = (Comision)cmbComision.SelectedItem;
+
+            switch (this.Modo)
+            {
+                case ModoForm.Alta:
+                    CursoActual.State = BusinessEntity.States.New;
+                    break;
+                case ModoForm.Baja:
+                    CursoActual.State = BusinessEntity.States.Deleted;
+                    break;
+                case ModoForm.Modificacion:
+                    CursoActual.State = BusinessEntity.States.Modified;
+                    break;
+                case ModoForm.Consulta:
+                    CursoActual.State = BusinessEntity.States.Unmodified;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+        public CursoDesktop() : base ()
         {
             InitializeComponent();
 
@@ -29,6 +111,20 @@ namespace UI.Desktop
             cmbComision.ValueMember = "ID";
 
             actMaterias(0);
+        }
+
+        public override void GuardarCambios()
+        {
+            MapearADatos();
+            CursoLogic esL = new CursoLogic();
+            try
+            {
+                esL.Save(CursoActual);
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message);
+            }
         }
 
         private void actMaterias(int idComision)
@@ -57,6 +153,17 @@ namespace UI.Desktop
             actMaterias(idComision);
 
             return;
+        }
+
+        private void btnGuardar_Click(object sender, EventArgs e)
+        {
+            this.GuardarCambios();
+            this.Close();
+        }
+
+        private void btnSalir_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
 
