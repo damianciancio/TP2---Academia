@@ -27,6 +27,8 @@ namespace Data.Database
                     Plan pa = new Plan();
                     Persona pe = new Persona();
                     Especialidad es = new Especialidad();
+                    TipoPersona tp = new TipoPersona();
+                    pe.TipoPersona = tp;
                     pe.ID = (int)drPersonas["personas.id_persona"];
                     pe.Nombre = (string)drPersonas["personas.nombre"];
                     pe.Apellido = (string)drPersonas["personas.apellido"];
@@ -35,7 +37,7 @@ namespace Data.Database
                     pe.FechaNac = (DateTime)drPersonas["personas.fecha_nac"];
                     pe.Email = (string)drPersonas["personas.email"];
                     pe.Legajo = (int)drPersonas["personas.legajo"];
-                    pe.TipoPersona = (int)drPersonas["personas.tipo_persona"];
+                    pe.TipoPersona.ID = (int)drPersonas["personas.tipo_persona"];
                     pe.IdPlan = pa.ID = (int)drPersonas["materias.id_plan"];
                     pa.ID = (int)drPersonas["materias.id_plan"];
                     pa.Descripcion = (string)drPersonas["desc_plan"];
@@ -76,6 +78,8 @@ namespace Data.Database
                 {
                     Plan pa = new Plan();
                      Especialidad es = new Especialidad();
+                     TipoPersona tp = new TipoPersona();
+                     pe.TipoPersona = tp;
                     pe.ID = (int)drPersonas["personas.id_persona"];
                     pe.Nombre = (string)drPersonas["personas.nombre"];
                     pe.Apellido = (string)drPersonas["personas.apellido"];
@@ -84,7 +88,7 @@ namespace Data.Database
                     pe.FechaNac = (DateTime)drPersonas["personas.fecha_nac"];
                     pe.Email = (string)drPersonas["personas.email"];
                     pe.Legajo = (int)drPersonas["personas.legajo"];
-                    pe.TipoPersona = (int)drPersonas["personas.tipo_persona"];
+                    pe.TipoPersona.ID = (int)drPersonas["personas.tipo_persona"];
                     pe.IdPlan = pa.ID = (int)drPersonas["materias.id_plan"];
                     pa.ID = (int)drPersonas["materias.id_plan"];
                     pa.Descripcion = (string)drPersonas["desc_plan"];
@@ -166,7 +170,7 @@ namespace Data.Database
                 cmdPersona.Parameters.Add("@email", SqlDbType.VarChar, 50).Value = pe.Email;
                 cmdPersona.Parameters.Add("@telefono", SqlDbType.VarChar, 50).Value = pe.Telefono;
                 cmdPersona.Parameters.Add("@legajo", SqlDbType.Decimal).Value = pe.Legajo;
-                cmdPersona.Parameters.Add("@tipoPersona", SqlDbType.Decimal).Value = pe.TipoPersona;
+                cmdPersona.Parameters.Add("@tipoPersona", SqlDbType.Decimal).Value = pe.TipoPersona.ID;
                 cmdPersona.Parameters.Add("@fechaNac",SqlDbType.DateTime).Value = pe.FechaNac;
                 cmdPersona.Parameters.Add("@idPlan", SqlDbType.Decimal).Value = pe.Plan.ID;
                 cmdPersona.Parameters.Add("@id", SqlDbType.Decimal).Value = pe.ID;
@@ -196,7 +200,7 @@ namespace Data.Database
                 cmdInsert.Parameters.Add("@email", SqlDbType.VarChar, 50).Value = pe.Email;
                 cmdInsert.Parameters.Add("@telefono", SqlDbType.VarChar, 50).Value = pe.Telefono;
                 cmdInsert.Parameters.Add("@legajo", SqlDbType.Decimal).Value = pe.Legajo;
-                cmdInsert.Parameters.Add("@tipoPersona", SqlDbType.Decimal).Value = pe.TipoPersona;
+                cmdInsert.Parameters.Add("@tipoPersona", SqlDbType.Decimal).Value = pe.TipoPersona.ID;
                 cmdInsert.Parameters.Add("@fechaNac", SqlDbType.DateTime).Value = pe.FechaNac;
                 cmdInsert.Parameters.Add("@idPlan", SqlDbType.Decimal).Value = pe.Plan.ID;
                 pe.ID = Decimal.ToInt32((decimal)cmdInsert.ExecuteScalar());

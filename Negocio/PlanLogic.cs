@@ -38,6 +38,20 @@ namespace Negocio
             return planes;
         }
 
+        public List<Plan> GetAll(int idEspecialidad)
+        {
+            List<Plan> planes = new List<Plan>();
+            try
+            {
+                planes = PlanData.GetAll(idEspecialidad);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return planes;
+        }
+
         public Plan GetOne(int ID)
         {
             Plan plan = new Plan();

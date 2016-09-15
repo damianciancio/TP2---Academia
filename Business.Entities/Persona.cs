@@ -58,12 +58,12 @@ namespace Business.Entities
             get { return _legajo; }
             set { _legajo = value; }
         }
-        private int _tipoPersona;
 
-        public int TipoPersona
+
+        public TipoPersona TipoPersona
         {
-            get { return _tipoPersona; }
-            set { _tipoPersona = value; }
+            get;
+            set;
         }
         private int _idPlan;
 

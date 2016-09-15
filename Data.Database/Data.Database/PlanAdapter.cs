@@ -40,6 +40,37 @@ namespace Data.Database
             }
             return pl;
         }
+
+        public List<Plan> GetAll(int idEspecialidad)
+        {
+            List<Plan> pl = new List<Plan>();
+            try
+            {
+                this.OpenConnection();
+                SqlCommand cmdPlan = new SqlCommand("select * from planes where id_especialidad = @idEspecialidad", SqlConn);
+                cmdPlan.Parameters.Add("@idEspecialidad", SqlDbType.Int).Value = idEspecialidad;
+                SqlDataReader drPlanes = cmdPlan.ExecuteReader();
+                while (drPlanes.Read())
+                {
+                    Plan pla = new Plan();
+                    pla.ID = (int)drPlanes["id_plan"];
+                    pla.Descripcion = (string)drPlanes["desc_plan"];
+                    pla.Especialidad = (new EspecialidadAdapter()).GetOne((int)drPlanes["id_especialidad"]);
+                    pl.Add(pla);
+                }
+            }
+            catch (Exception e)
+            {
+                Exception ExManejada = new Exception("No se pudo acceder a la base de datos", e);
+                throw ExManejada;
+            }
+            finally
+            {
+                this.CloseConnection();
+                SqlConn = null;
+            }
+            return pl;
+        }
         public Plan GetOne(int ID)
         {
             Plan pl = new Plan();

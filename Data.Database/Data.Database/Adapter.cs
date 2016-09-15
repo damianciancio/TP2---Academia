@@ -10,7 +10,7 @@ namespace Data.Database
     {
 
 
-        const string consKeyDefaultCnnString = "ConnStringServerDamianNetbook";
+        const string consKeyDefaultCnnString = "ConnStringLocal";
 
         private SqlConnection _sqlConn;
 
