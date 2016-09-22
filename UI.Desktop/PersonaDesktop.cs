@@ -159,7 +159,7 @@ namespace UI.Desktop
             {
                 actPlanes(((Especialidad)cmbCarrera.SelectedValue).ID);
             }
-           
+
         }
 
        /* public override void GuardarCambios()

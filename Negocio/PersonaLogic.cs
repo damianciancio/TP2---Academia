@@ -55,5 +55,19 @@ namespace Negocio
         {
             PersonaData.Save(pe);
         }
+
+        public bool InscribirseA(Persona pe, Curso cu)
+        {
+            Materia _ma = new MateriaAdapter().GetOne(cu.Materia.ID);
+
+            if (pe.IdPlan == _ma.Plan.ID) return false;
+
+            bool result = PersonaData.InscribirCurso(pe, cu);
+
+
+
+
+            return result;
+        }
     }
 }

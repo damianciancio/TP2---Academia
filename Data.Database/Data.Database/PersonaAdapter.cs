@@ -215,5 +215,28 @@ namespace Data.Database
                 this.CloseConnection();
             }
         }
+
+        public bool InscribirCurso (Persona pe, Curso cu) 
+        {
+            try
+            {
+                OpenConnection();
+
+                string query = @"Insert Into dbo.Alumnos_Inscripciones(id_alumno, id_curso)
+                    VALUES(@idAlu, @idCur)";
+
+                SqlCommand cmdInsert = new SqlCommand(query, SqlConn);
+                cmdInsert.Parameters.Add("@idAlu", SqlDbType.Int).Value = pe.ID;
+                cmdInsert.Parameters.Add("@idCur", SqlDbType.Int).Value = cu.ID;
+
+                cmdInsert.ExecuteNonQuery();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }
