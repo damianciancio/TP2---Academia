@@ -1,0 +1,25 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="UI.Web.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="es">
+    <head runat="server">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><%: Page.Title %> Academia</title>
+    </head>
+    <body>
+        <form id="bodyForm" runat="server">
+            <asp:Menu runat="server" ID="menu" DataSourceID="SiteMapDataSource">
+            </asp:Menu>
+            <asp:SiteMapDataSource ID="SiteMapDataSource" runat="server" />
+            <div>
+                <asp:ContentPlaceHolder ID="bodyContentPlaceHolder" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
+        </form>
+    </body>
+</html>
+
+
